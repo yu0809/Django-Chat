@@ -1,0 +1,65 @@
+{% extends "chat/base.html" %}
+{% load static %}
+{% block title %}聊天室：{{ room_name }}{% endblock %}
+{% block head %}
+<!-- 添加调试脚本 -->
+<script>
+    console.log("聊天室页面加载中，房间名称: {{ room_name }}");
+    window.roomData = {
+        name: "{{ room_name }}",
+        path: window.location.pathname
+    };
+</script>
+<style>
+  /* 加载历史记录按钮样式 */
+  #history-button-container {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 0.5rem;
+  }
+  
+  /* 加载动画 */
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  .loading-icon {
+    display: inline-block;
+    animation: spin 1s linear infinite;
+  }
+</style>
+<script src="{% static 'chat/js/chat.js' %}"></script>
+{% endblock %}
+{% block content %}
+<div class="card">
+  <div class="card-title">
+    <i class="bi bi-chat-square-text-fill me-2"></i>聊天室：#{{ room_name }}
+  </div>
+  
+  <div class="chat-container">
+    <div class="chat-header">
+      <i class="bi bi-people-fill me-2"></i>#{{ room_name }}
+    </div>
+    
+    <div id="chat-log" class="chat-log">
+      <!-- 初始系统消息 -->
+      <div class="chat-message message-system">
+        <span>正在连接到聊天服务器...</span>
+      </div>
+    </div>
+    
+    <div class="chat-input-container">
+      <input id="chat-message-input" type="text" class="chat-input" 
+             placeholder="输入消息并回车发送" autocomplete="off">
+      <button id="chat-message-submit" class="btn btn-primary">
+        <i class="bi bi-send"></i>
+      </button>
+    </div>
+  </div>
+  
+  <div id="connection-status" class="chat-status">
+    <i class="bi bi-wifi me-1"></i>WebSocket状态: 连接中...
+  </div>
+</div>
+{% endblock %} 

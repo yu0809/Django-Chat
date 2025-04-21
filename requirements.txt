@@ -1,0 +1,9 @@
+Django==5.2             # Django web框架
+channels==4.2.2        # WebSocket支持
+daphne==4.1.0          # ASGI服务器
+channels-redis==4.2    # 可选：生产环境Redis作为Channel Layer
+
+# 以下依赖在生产环境可能需要
+# psycopg2-binary==2.9.9  # PostgreSQL数据库连接
+# redis==5.0.3            # Redis客户端
+# uvicorn==0.27.1         # 可选的ASGI服务器 

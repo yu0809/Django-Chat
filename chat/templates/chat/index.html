@@ -1,0 +1,32 @@
+{% extends "chat/base.html" %}
+{% block title %}聊天室列表{% endblock %}
+{% block content %}
+<div class="card">
+  <div class="card-title">
+    <i class="bi bi-list-ul me-2"></i>可用的聊天室
+  </div>
+  
+  <ul class="list-group">
+    {% for r in rooms %}
+    <li class="list-group-item">
+      <div class="d-flex align-items-center">
+        <i class="bi bi-chat-square-text me-2"></i>
+        <span class="fw-medium">{{ r.name }}</span>
+      </div>
+      <a class="btn btn-outline-primary" href="{% url 'room' room_name=r.name %}">
+        <i class="bi bi-box-arrow-in-right me-1"></i>进入
+      </a>
+    </li>
+    {% empty %}
+    <li class="list-group-item text-center">
+      <i class="bi bi-emoji-frown me-2"></i>暂无聊天室
+      <div class="mt-2">
+        <a href="{% url 'room_create' %}" class="btn btn-success btn-sm">
+          <i class="bi bi-plus-circle me-1"></i>创建第一个聊天室
+        </a>
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %} 
