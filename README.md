@@ -1,7 +1,6 @@
 # Django Chat - 实时聊天应用
 
 ![Django Chat](./screenshots/demo.png)
-*[此处需要您添加项目截图]*
 
 Django Chat 是一个基于 Django 和 WebSockets 的实时聊天应用，支持多个聊天室、用户认证以及历史消息记录。应用采用了现代化的UI设计，提供流畅的用户体验。
 
@@ -19,11 +18,9 @@ Django Chat 是一个基于 Django 和 WebSockets 的实时聊天应用，支持
 
 ### 聊天室列表
 ![聊天室列表](./screenshots/rooms.png)
-*[此处需要您添加聊天室列表截图]*
 
 ### 聊天界面
 ![聊天界面](./screenshots/chat.png)
-*[此处需要您添加聊天界面截图]*
 
 ## 🛠️ 技术栈
 
@@ -122,7 +119,7 @@ bash run.sh
 
 ## 📧 联系方式
 
-[在此处添加您的联系方式]
+yuhongjie@shu.edu.cn
 
 ---
 
