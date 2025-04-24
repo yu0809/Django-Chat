@@ -127,3 +127,5 @@ yuhongjie@shu.edu.cn
 ---
 
 感谢使用 Django Chat！ 
+
+如果你觉得这个项目对你有帮助，欢迎给个 ⭐Star 支持一下，让更多人看到它！
