@@ -1,6 +1,7 @@
 import json
 from channels.generic.websocket import AsyncWebsocketConsumer
 import logging
+import random
 from channels.db import database_sync_to_async
 from django.contrib.auth.models import User
 from .models import Room, Message
@@ -58,13 +59,31 @@ class ChatConsumer(AsyncWebsocketConsumer):
             # 正常的消息处理
             message = data["message"]
             username = self.user.username if self.user.is_authenticated else "匿名用户"
-            
+
+            # 特殊指令：/roll [骰子面数]
+            if message.startswith("/roll"):
+                parts = message.split()
+                sides = 6
+                if len(parts) > 1 and parts[1].isdigit():
+                    sides = int(parts[1])
+                result = random.randint(1, sides)
+                await self.channel_layer.group_send(
+                    self.group_name,
+                    {
+                        "type": "chat_message",
+                        "message": f"🎲 {username} 掷出了 {result} (1-{sides})",
+                        "username": "系统",
+                        "system": True,
+                    },
+                )
+                return
+
             # 保存消息到数据库
             if self.user.is_authenticated:
                 await self.save_message(message)
-            
+
             print(f"将消息广播到群组 {self.group_name}: {message}")
-            
+
             # 发送消息到组
             await self.channel_layer.group_send(
                 self.group_name,
@@ -86,10 +105,13 @@ class ChatConsumer(AsyncWebsocketConsumer):
         """将消息发送到WebSocket"""
         print(f"发送消息到客户端: {event}")
         try:
-            await self.send(text_data=json.dumps({
+            payload = {
                 "message": event["message"],
                 "username": event["username"],
-            }))
+            }
+            if event.get("system"):
+                payload["system"] = True
+            await self.send(text_data=json.dumps(payload))
         except Exception as e:
             logger.error(f"发送消息到客户端时出错: {e}")
             print(f"发送消息出错: {e}")
